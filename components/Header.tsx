@@ -5,22 +5,7 @@ function Header() {
   return (
     <header>
       <div className="flex flex-col md:flex-row items-center p-4 bg-orange-400/10 rounded-b-l">
-        <div
-          className="
-          absolute
-          top-0
-          left-0
-          w-full
-          h-2/5
-          bg-gradient-to-br
-          from-orange-500
-          to-pink-300
-          filter
-          blur-3xl
-          opacity-90
-          -z-10
-          "
-        />
+        <div className="absolute top-0 left-0 w-full h-2/5 bg-gradient-to-br from-orange-500 to-pink-300 filter blur-3xl opacity-90 -z-10" />
         <Image
           src="/Trello_logo.png"
           alt="Trello Logo"

@@ -19,7 +19,7 @@ function Board() {
           >
             {/* render columns */}
             {/* columns: to do, in progress, done */}
-            {/* each column has note cards */}
+            {/* each column has todo cards */}
 
             {provided.placeholder}
           </div>
