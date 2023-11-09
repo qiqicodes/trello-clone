@@ -11,5 +11,10 @@ const useBoardStore = create((BoardState) => ({
   },
   getBoard: async () => {
     // fetch all data and group by column
+    // data looks like {
+    //   todos: [],
+    //   inprogress:[],
+    //   done:[]
+    // }
   },
 }));
