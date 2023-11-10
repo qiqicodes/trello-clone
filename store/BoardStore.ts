@@ -1,11 +1,12 @@
 import { create } from "zustand";
+import getTodosColumn from "@/utils/getTodosColumn";
 
 interface BoardState {
   board: Board;
-  getBoard: () => void;
+  getBoard: () => Promise<void>;
 }
 
-const useBoardStore = create((BoardState) => ({
+export const useBoardStore = create<BoardState>()((set) => ({
   board: {
     columns: new Map<TypedColumn, Column>(),
   },
@@ -16,5 +17,8 @@ const useBoardStore = create((BoardState) => ({
     //   inprogress:[],
     //   done:[]
     // }
+
+    const board = await getTodosColumn();
+    set({ board });
   },
 }));

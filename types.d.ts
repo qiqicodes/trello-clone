@@ -6,14 +6,13 @@ type TypedColumn = "todo" | "inprogress" | "done";
 
 interface Column {
   id: TypedColumn;
-  lists: Todo[];
+  list: Todo[];
 }
 
-interface Todo {
-  id: string;
-  createdTimestamp: string;
+interface Todo extends Models.Document {
+  $id: string;
+  $createdAt: string;
   title: string;
-  description: string;
   status: TypedColumn;
   image?: string;
 }
