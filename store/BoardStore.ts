@@ -3,7 +3,7 @@ import getTodosColumn from "@/utils/getTodosColumn";
 
 interface BoardState {
   board: Board;
-  getBoard: () => Promise<void>;
+  getBoard: () => void;
 }
 
 export const useBoardStore = create<BoardState>()((set) => ({

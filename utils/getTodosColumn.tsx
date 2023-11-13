@@ -8,7 +8,6 @@ async function getTodosColumn() {
       process.env.NEXT_PUBLIC_TODOS_COLLECTION_ID!
     );
     // transform array to a map
-    console.log(data)
     const todos = data.documents;
     const columns = todos.reduce((acc, todo) => {
       if (!acc.get(todo.status)) {
@@ -29,7 +28,22 @@ async function getTodosColumn() {
       return acc;
     }, new Map<TypedColumn, Column>());
 
-    console.log(columns);
+    // if columns are empty, fill with tempty list
+    const columnTypes: TypedColumn[] = ["todo", "inprogress", "done"];
+    for (let column of columnTypes) {
+      if (!columns.get(column)) {
+        columns.set(column, {
+          id: column,
+          list: [],
+        });
+      }
+    }
+
+    const board: Board = {
+      columns: columns,
+    };
+    console.log(board);
+    return board;
   } catch (error) {
     console.error(error);
   }
