@@ -38,12 +38,7 @@ function Board() {
             {/* columns: to do, in progress, done */}
             {/* each column has todo cards */}
             {Array.from(board.columns.entries()).map(([id, column], index) => (
-              <Column
-                key={id}
-                id={id}
-                list={column.list}
-                index={index}
-              ></Column>
+              <Column key={id} id={id} list={column.list} index={index} />
             ))}
           </div>
         )}

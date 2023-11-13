@@ -1,6 +1,7 @@
 import { Draggable, Droppable } from "react-beautiful-dnd";
+import TodoCard from "@/components/TodoCard";
 
-function Column({ id, list, index }: dragProps) {
+function Column({ id, list, index }: ColumnProps) {
   return (
     <Draggable draggableId={id} index={index}>
       {(provided, snapshot) => (
@@ -29,35 +30,7 @@ function Column({ id, list, index }: dragProps) {
                 </h2>
                 <div className="flex flex-col space-y-2">
                   {list.map((todo, index) => (
-                    <Draggable
-                      key={todo.$id}
-                      draggableId={todo.$id}
-                      index={index}
-                    >
-                      {(provided, _snapshot) => (
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                        >
-                          <Droppable droppableId={index.toString()} type="card">
-                            {(provided, snapshot) => (
-                              <div
-                                {...provided.droppableProps}
-                                ref={provided.innerRef}
-                                className={`p-2 rounded-2xl ${
-                                  snapshot.isDraggingOver
-                                    ? "bg-purple-500"
-                                    : "bg-white/50"
-                                }`}
-                              >
-                                {todo.title}
-                              </div>
-                            )}
-                          </Droppable>
-                        </div>
-                      )}
-                    </Draggable>
+                    <TodoCard key={todo.$id} todo={todo} index={index} />
                   ))}
                 </div>
               </div>
@@ -69,7 +42,7 @@ function Column({ id, list, index }: dragProps) {
   );
 }
 
-type dragProps = {
+type ColumnProps = {
   id: TypedColumn;
   list: Todo[];
   index: number;
