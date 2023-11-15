@@ -22,8 +22,6 @@ function Board() {
     const { destination, source, type, draggableId } = result;
     console.log(destination, source, type, draggableId);
 
-    // check if the user dragged card or column
-
     // dropped nowhere
     if (!destination) {
       return;
@@ -31,19 +29,50 @@ function Board() {
 
     // column drag
     if (type === "column") {
-      const entries = Array.from(board.columns.entries());
-      const [removed] = entries.splice(source.index, 1);
-      entries.splice(destination.index, 0, removed);
-      const rearrangedCol = new Map(entries);
+      const columns = Array.from(board.columns);
+      const [removed] = columns.splice(source.index, 1);
+      columns.splice(destination.index, 0, removed);
+      const rearrangedCol = new Map(columns);
       setBoard({ ...board, columns: rearrangedCol });
-      console.log(entries);
     }
 
     // card drag
-    if (type === "card") {
+    const columns = Array.from(board.columns);
+    const srcIndex = columns[Number(source.droppableId)];
+    const destIndex = columns[Number(destination.droppableId)];
+
+    const srcCol: Column = {
+      id: srcIndex[0],
+      list: srcIndex[1].list,
+    };
+    const destCol: Column = {
+      id: destIndex[0],
+      list: destIndex[1].list,
+    };
+
+    if (!srcCol || !destCol) return;
+
+    if (source.index === destination.index) return;
+
+    const newList = srcCol.list;
+    const [removed] = newList.splice(source.index, 1);
+
+    if (srcCol.id === destCol.id) {
+      // in same column
+      newList.splice(destination.index, 0, removed);
+      const newCol = {
+        id: srcCol.id,
+        list: newList,
+      };
+
+      const updatedColumns = new Map(board.columns);
+      updatedColumns.set(srcCol.id, newCol);
+
+      setBoard({ ...board, columns: updatedColumns });
+    } else {
+      // todo: dragged to another column
     }
   };
-
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
       <h1>I am beautiful dnd board</h1>
