@@ -28,7 +28,7 @@ async function getTodosColumn() {
       return acc;
     }, new Map<TypedColumn, Column>());
 
-    // if columns are empty, fill with tempty list
+    // if columns are empty, fill with empty list
     const columnTypes: TypedColumn[] = ["todo", "inprogress", "done"];
     for (let column of columnTypes) {
       if (!columns.get(column)) {

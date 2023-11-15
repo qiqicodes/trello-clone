@@ -8,35 +8,52 @@ import Column from "@/components/Column";
 function Board() {
   console.log("I am the board");
 
-  const [board, getBoard] = useBoardStore((state) => [
+  const [board, getBoard, setBoard] = useBoardStore((state) => [
     state.board,
     state.getBoard,
+    state.setBoard,
   ]);
 
   useEffect(() => {
     getBoard();
   }, [getBoard]);
 
-  const onDragEnd = (result: DropResult) => {
+  const handleOnDragEnd = (result: DropResult) => {
     const { destination, source, type, draggableId } = result;
+    console.log(destination, source, type, draggableId);
 
     // check if the user dragged card or column
-    // check if the user has dragged card outside of board and not into a column
+
+    // dropped nowhere
+    if (!destination) {
+      return;
+    }
+
+    // column drag
+    if (type === "column") {
+      const entries = Array.from(board.columns.entries());
+      const [removed] = entries.splice(source.index, 1);
+      entries.splice(destination.index, 0, removed);
+      const rearrangedCol = new Map(entries);
+      setBoard({ ...board, columns: rearrangedCol });
+      console.log(entries);
+    }
+
+    // card drag
+    if (type === "card") {
+    }
   };
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
+    <DragDropContext onDragEnd={handleOnDragEnd}>
       <h1>I am beautiful dnd board</h1>
       <Droppable droppableId="board" direction="horizontal" type="column">
         {(provided) => (
           <div
-            className="grid grid-cols-1 md:grid-cols-3 gap-5 mx-auto"
+            className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-7xl mx-auto"
             {...provided.droppableProps}
             ref={provided.innerRef}
           >
-            {/* render columns */}
-            {/* columns: to do, in progress, done */}
-            {/* each column has todo cards */}
             {Array.from(board.columns.entries()).map(([id, column], index) => (
               <Column key={id} id={id} list={column.list} index={index} />
             ))}
