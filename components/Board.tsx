@@ -27,7 +27,7 @@ function Board() {
       return;
     }
 
-    // column drag
+    // drag column
     if (type === "column") {
       const columns = Array.from(board.columns);
       const [removed] = columns.splice(source.index, 1);
@@ -36,7 +36,7 @@ function Board() {
       setBoard({ ...board, columns: rearrangedCol });
     }
 
-    // card drag
+    // drag card
     const columns = Array.from(board.columns);
     const srcIndex = columns[Number(source.droppableId)];
     const destIndex = columns[Number(destination.droppableId)];
@@ -52,13 +52,13 @@ function Board() {
 
     if (!srcCol || !destCol) return;
 
-    if (source.index === destination.index) return;
+    if (srcCol.id === destCol.id && source.index === destination.index) return;
 
     const newList = srcCol.list;
     const [removed] = newList.splice(source.index, 1);
 
     if (srcCol.id === destCol.id) {
-      // in same column
+      // same column
       newList.splice(destination.index, 0, removed);
       const newCol = {
         id: srcCol.id,
@@ -70,7 +70,24 @@ function Board() {
 
       setBoard({ ...board, columns: updatedColumns });
     } else {
-      // todo: dragged to another column
+      // different column
+      const newDestList = Array.from(destCol.list);
+      newDestList.splice(destination.index, 0, removed);
+
+      const newSrcCol = {
+        id: srcCol.id,
+        list: newList,
+      };
+      const newDestCol = {
+        id: destCol.id,
+        list: newDestList,
+      };
+
+      const updatedColumns = new Map(board.columns);
+      updatedColumns.set(srcCol.id, newSrcCol);
+      updatedColumns.set(destCol.id, newDestCol);
+
+      setBoard({ ...board, columns: updatedColumns });
     }
   };
   return (
