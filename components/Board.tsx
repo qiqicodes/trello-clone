@@ -8,10 +8,11 @@ import Column from "@/components/Column";
 function Board() {
   console.log("I am the board");
 
-  const [board, getBoard, setBoard] = useBoardStore((state) => [
+  const [board, getBoard, setBoard, updateDBTodo] = useBoardStore((state) => [
     state.board,
     state.getBoard,
     state.setBoard,
+    state.updateDBTodo,
   ]);
 
   useEffect(() => {
@@ -87,12 +88,13 @@ function Board() {
       updatedColumns.set(srcCol.id, newSrcCol);
       updatedColumns.set(destCol.id, newDestCol);
 
+      updateDBTodo(removed, destCol.id);
+
       setBoard({ ...board, columns: updatedColumns });
     }
   };
   return (
     <DragDropContext onDragEnd={handleOnDragEnd}>
-      <h1>I am beautiful dnd board</h1>
       <Droppable droppableId="board" direction="horizontal" type="column">
         {(provided) => (
           <div

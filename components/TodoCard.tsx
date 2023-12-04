@@ -15,7 +15,7 @@ function TodoCard({ todo, index }: cardProps) {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           className={`p-2 rounded-xl ${
-            snapshot.isDragging ? "bg-purple-500" : "bg-white"
+            snapshot.isDragging ? "bg-violet-500" : "bg-white"
           }`}
         >
           <div className="flex justify-between items-center p-2">

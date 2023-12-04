@@ -39,10 +39,16 @@ async function getTodosColumn() {
       }
     }
 
+    // sort column order
+    const sortedColumns = new Map(
+      Array.from(columns.entries()).sort((a, b) => {
+        return columnTypes.indexOf(a[0]) - columnTypes.indexOf(b[0]);
+      })
+    );
+
     const board: Board = {
-      columns: columns,
+      columns: sortedColumns,
     };
-    console.log(board);
     return board;
   } catch (error) {
     console.error(error);

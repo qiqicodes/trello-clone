@@ -7,8 +7,8 @@ function Column({ id, list, index }: ColumnProps) {
     <Draggable draggableId={id} index={index}>
       {(provided, snapshot) => (
         <div
-          className={`p-2 rounded-2xl ${
-            snapshot.isDragging ? "bg-orange-500" : "bg-white/50"
+          className={` p-2 rounded-2xl shadow-sm ${
+            snapshot.isDragging ? "bg-orange-500" : "bg-white/0"
           }`}
           ref={provided.innerRef}
           {...provided.draggableProps}
